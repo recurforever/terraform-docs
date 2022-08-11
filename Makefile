@@ -109,6 +109,11 @@ docs:   ## Generate document of formatter commands
 	@ $(MAKE) --no-print-directory log-$@
 	$(GORUN) ./scripts/docs/generate.go
 
+.PHONY: install
+install: build
+	chmod +x ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
+	sudo cp ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME) /usr/local/bin/terraform-docs
+
 ###########
 ##@ Release
 
