@@ -15,18 +15,23 @@
         |------|-------------|
         {{- if .Config.Settings.Type }}------|{{ end }}
         {{- if .Config.Settings.Default }}---------|{{ end }}
-        {{- if .Config.Settings.Required }}:--------:|{{ end }}
-        {{- range .Module.Inputs }}
-            | {{ anchorNameMarkdown "input" .Name }} | {{ tostring .Description | sanitizeMarkdownTbl }} |
-            {{- if $.Config.Settings.Type -}}
-                {{ printf " " }}{{ tostring .Type | type | sanitizeMarkdownTbl }} |
-            {{- end -}}
-            {{- if $.Config.Settings.Default -}}
-                {{ printf " " }}{{ value .GetValue | sanitizeMarkdownTbl }} |
-            {{- end -}}
-            {{- if $.Config.Settings.Required -}}
-                {{ printf " " }}{{ ternary .Required "yes" "no" }} |
-            {{- end -}}
-        {{- end }}
+        {{- if .Config.Settings.Required }}:--------:|{{ end -}}
+        {{ $ignore_vars := list "additional_tag_map" "attributes" "context" "delimiter" "descriptor_formats" "environment" 
+            "id_length_limit" "import_role_arn" "label_key_case" "label_order" "label_value_case" "labels_as_tags" "namespace" 
+            "regex_replace_chars" "stage" "tenant" "base_config" "sandbox_config" }}
+        {{- range .Module.Inputs -}}
+            {{- if not ( has .Name $ignore_vars ) }}
+                | {{ anchorNameMarkdown "input" .Name }} | {{ tostring .Description | sanitizeMarkdownTbl }} |
+                {{- if $.Config.Settings.Type -}}
+                    {{ printf " " }}{{ tostring .Type | type | sanitizeMarkdownTbl }} |
+                {{- end -}}
+                {{- if $.Config.Settings.Default -}}
+                    {{ printf " " }}{{ value .GetValue | sanitizeMarkdownTbl }} |
+                {{- end -}}
+                {{- if $.Config.Settings.Required -}}
+                    {{ printf " " }}{{ ternary .Required "yes" "no" }} |
+                {{- end -}}
+            {{- end }}
+        {{- end -}}
     {{ end }}
 {{ end -}}
