@@ -93,6 +93,7 @@ deps:
 build: clean ## Build binary for current OS/ARCH
 	@ $(MAKE) --no-print-directory log-$@
 	$(GOBUILD) -o ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
+	echo "Build Dir: " ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
 
 .PHONY: docker
 docker:   ## Build Docker image
