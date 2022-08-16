@@ -29,7 +29,10 @@ jobs:
       - name: Build binary
         run: make build
 
-      - uses: actions/upload-artifact@v3
+      - uses: recurforever/devops-actions/core/upload-artifacts-s3/v0@main
         with:
-          name: tf-docs-bin
-          path: bin/linux-amd64/terraform-docs
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          glob-pattern: bin/linux-amd64/terraform-docs
+          s3-artifact-bucket: rc-gbl-tools-artifacts
+          s3-artifact-version: "v1"
+
