@@ -94,6 +94,17 @@ build: clean ## Build binary for current OS/ARCH
 	@ $(MAKE) --no-print-directory log-$@
 	$(GOBUILD) -o ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
 
+.PHONY: install-mac
+install-mac: build
+	chmod +x ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
+	sudo cp ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME) /usr/local/bin/terraform-docs
+
+.PHONY: install-linux
+install-linux: build
+	chmod +x ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME)
+	sudo cp ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(PROJECT_NAME) /usr/bin/terraform-docs
+
+
 .PHONY: docker
 docker:   ## Build Docker image
 	@ $(MAKE) --no-print-directory log-$@
