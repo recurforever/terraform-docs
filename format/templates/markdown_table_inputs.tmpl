@@ -16,9 +16,9 @@
         {{- if .Config.Settings.Type }}------|{{ end }}
         {{- if .Config.Settings.Default }}---------|{{ end }}
         {{- if .Config.Settings.Required }}:--------:|{{ end -}}
-        {{ $ignore_vars := list "additional_tag_map" "attributes" "context" "delimiter" "descriptor_formats" "environment" 
-            "id_length_limit" "import_role_arn" "label_key_case" "label_order" "label_value_case" "labels_as_tags" "namespace" 
-            "regex_replace_chars" "stage" "tenant" "base_config" "sandbox_config" }}
+        {{ $ignore_vars := list "additional_tag_map" "attributes" "base_config" "context" "delimiter" "descriptor_formats" "environment" 
+            "id_length_limit" "import_role_arn" "label_key_case" "label_order" "label_value_case" "labels_as_tags" "localstack_enabled" 
+            "namespace" "regex_replace_chars" "region" "sandbox_config" "stage" "tenant" }}
         {{- range .Module.Inputs -}}
             {{- if not ( has .Name $ignore_vars ) }}
                 | {{ anchorNameMarkdown "input" .Name }} | {{ tostring .Description | sanitizeMarkdownTbl }} |
